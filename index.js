@@ -3,7 +3,20 @@ $(document).ready(function(){
   var interval;
   var timeLeft = 10;
   var score = 0;
-  var highScore = 0; // New variable for high score
+  var highScore = 0;
+   var numberLimit = 10;
+
+
+  var updateSelectedLimit = function () {
+    $('#selected-limit').text(numberLimit);
+  };
+
+
+  $('#number-limit').on('input', function () {
+    numberLimit = parseInt($(this).val());
+    updateSelectedLimit();
+    renderNewQuestion();
+  });
 
   var updateTimeLeft = function (amount) {
     timeLeft += amount;
@@ -14,7 +27,6 @@ $(document).ready(function(){
     score += amount;
     $('#score').text(score);
 
-    // Update high score if the current score is higher
     if (score > highScore) {
       highScore = score;
       $('#highScore').text(highScore);
@@ -23,10 +35,6 @@ $(document).ready(function(){
 
   var startGame = function () {
     if (!interval) {
-      if (timeLeft === 0) {
-        updateTimeLeft(10);
-        updateScore(-score);
-      }
       interval = setInterval(function () {
         updateTimeLeft(-1);
         if (timeLeft === 0) {
@@ -37,14 +45,14 @@ $(document).ready(function(){
     }
   };
 
-  var randomNumberGenerator = function (size) {
-    return Math.ceil(Math.random() * size);
+  var randomNumberGenerator = function () {
+    return Math.ceil(Math.random() * numberLimit);
   };
 
   var questionGenerator = function () {
     var question = {};
-    var num1 = randomNumberGenerator(10);
-    var num2 = randomNumberGenerator(10);
+    var num1 = randomNumberGenerator();
+    var num2 = randomNumberGenerator();
 
     question.answer = num1 + num2;
     question.equation = String(num1) + " + " + String(num2);
@@ -66,10 +74,16 @@ $(document).ready(function(){
     }
   };
 
+
   $('#user-input').on('keyup', function () {
+    if (timeLeft === 0) {
+      timeLeft = 10;
+      updateScore(-score);
+    }
     startGame();
     checkAnswer(Number($(this).val()), currentQuestion.answer);
   });
 
   renderNewQuestion();
+  updateSelectedLimit();
 });
