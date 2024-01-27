@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>10 Seconds Math Game</title>
+</head>
+
+<body>
+  <section>
+    <h1>10 Seconds Math Game</h1>
+    <button onclick="startGame()">Start Game</button>
+    <div id="equation"></div>
+    <div class="input-container">
+      <input type="number" id="answerInput" placeholder="Your answer">
+      <button onclick="checkAnswer()">Enter</button>
+    </div>
+    <p>Time left: <span id="timeLeft">10</span>s</p>
+    <p>Score: <span id="score">0</span></p>
+    <p>High Score: <span id="highScore">0</span></p>
+    <div class='air air1'></div>
+    <div class='air air2'></div>
+    <div class='air air3'></div>
+    <div class='air air4'></div>
+  </section>
+  <script src="script.js"></script>
+</body>
+
+</html>
